@@ -7,15 +7,13 @@ var repo = process.argv[2]
 var name = process.argv[3]
 
 var github = new GitHubApi({
-    // required
     version: "3.0.0",
-    // optional
-    debug: true,
+    debug: false,
     protocol: "https",
-    host: "api.github.com", // should be api.github.com for GitHub
+    host: "api.github.com",
     timeout: 5000,
     headers: {
-        "user-agent": "envman-template-installer" // GitHub is happy with a unique user agent
+        "user-agent": "envman-template-installer"
     }
 });
 
