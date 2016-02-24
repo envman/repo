@@ -1,1 +1,1 @@
-node c:\git\node\repo\repo.js %1 %2
+node repo.js %1 %2
