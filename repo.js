@@ -13,7 +13,7 @@ var github = new GitHubApi({
     host: "api.github.com",
     timeout: 5000,
     headers: {
-        "user-agent": "envman-template-installer"
+        "user-agent": "github-template-installer"
     }
 });
 
@@ -42,12 +42,12 @@ prompt.get(properties, function (err, result) {
   console.log(repo);
 
   github.repos.create({ name: name }, function(error, result) {
-    exec('git clone https://github.com/envman/' + repo + '.git ' + name, [''], function(err, data) {
+    exec('git clone https://github.com/' + result.username + '/' + repo + '.git ' + name, [''], function(err, data) {
       console.log('clone done');
       console.log(error);
       console.log(data);
 
-      exec('git remote set-url origin git@github.com:envman/' + name + '.git', {cwd: name}, function(error, data) {
+      exec('git remote set-url origin git@github.com:' + result.username + '/' + name + '.git', {cwd: name}, function(error, data) {
         console.log('remote done');
         console.log(error);
         console.log(data);
