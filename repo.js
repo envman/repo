@@ -32,6 +32,8 @@ prompt.start();
 prompt.get(properties, function (err, result) {
   if (err) { return onErr(err); }
 
+  var username = result.username;
+
   github.authenticate({
       type: "basic",
       username: result.username,
@@ -42,20 +44,15 @@ prompt.get(properties, function (err, result) {
   console.log(repo);
 
   github.repos.create({ name: name }, function(error, result) {
-    exec('git clone https://github.com/' + result.username + '/' + repo + '.git ' + name, [''], function(err, data) {
+    var cloneCommand = 'git clone https://github.com/' + username +'/' + repo + '.git ' + name
+    exec(cloneCommand, [''], function(err, data) {
       console.log('clone done');
-      console.log(error);
-      console.log(data);
 
-      exec('git remote set-url origin git@github.com:' + result.username + '/' + name + '.git', {cwd: name}, function(error, data) {
+      exec('git remote set-url origin git@github.com:' + username + '/' + name + '.git', {cwd: name}, function(error, data) {
         console.log('remote done');
-        console.log(error);
-        console.log(data);
 
         exec('git push', {cwd: name}, function(error, data) {
           console.log('push done');
-          console.log(error);
-          console.log(data);
         });
       });
     });
